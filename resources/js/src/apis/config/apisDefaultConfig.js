@@ -2,5 +2,5 @@ export default {
   // Endpoints
   pruebasEndPoint: '/api/auth/pruebas',
   pruebas2EndPoint: '/api/auth/pruebas2',
-  loginEndpoint: '/api/auth/login',
+  getUsuarios: '/api/get/usuarios',
 }

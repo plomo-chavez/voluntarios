@@ -4,7 +4,7 @@ export default [
     name: 'home',
     component: () => import('@/views/Home.vue'),
     meta: {
-      pageTitle: 'Blog List',
+      pageTitle: 'Inicio',
       breadcrumb: [
         {
           text: 'Pages',
@@ -21,26 +21,21 @@ export default [
     },
   },
   {
-    path: '/homeee',
-    name: 'homeee',
+    path: '/usuarios',
+    name: 'usuarios',
     component: () => import('@/views/Home.vue'),
     meta: {
-      pageTitle: 'Blog List',
-      breadcrumb: [
-        {
-          text: 'Pages',
-          to: '/error-404',
-        },
-        {
-          text: 'Blog',
-        },
-        {
-          text: 'List',
-          active: true,
-        },
-      ],
+      pageTitle: 'Trabajadores',
     },
-  }, 
+  },
+  {
+    path: '/trabajadores',
+    name: 'trabajadores',
+    component: () => import('@/views/Home.vue'),
+    meta: {
+      pageTitle: 'Trabajadores',
+    },
+  },
   {
     path: '/factory',
     name: 'factory',
@@ -103,16 +98,16 @@ export default [
     },
   },
   {
-    path: '/pages/miscellaneous/coming-soon',
-    name: 'misc-coming-soon',
+    path: '/pages/coming-soon',
+    name: 'page-coming-soon',
     component: () => import('@/views/pages/miscellaneous/ComingSoon.vue'),
     meta: {
       layout: 'full',
     },
   },
   {
-    path: '/pages/miscellaneous/not-authorized',
-    name: 'misc-not-authorized',
+    path: '/pages/not-authorized',
+    name: 'page-not-authorized',
     component: () => import('@/views/pages/miscellaneous/NotAuthorized.vue'),
     meta: {
       layout: 'full',
@@ -120,16 +115,16 @@ export default [
     },
   },
   {
-    path: '/pages/miscellaneous/under-maintenance',
-    name: 'misc-under-maintenance',
+    path: '/pages/under-maintenance',
+    name: 'page-under-maintenance',
     component: () => import('@/views/pages/miscellaneous/UnderMaintenance.vue'),
     meta: {
       layout: 'full',
     },
   },
   {
-    path: '/pages/miscellaneous/error',
-    name: 'misc-error',
+    path: '/pages/error',
+    name: 'page-error',
     component: () => import('@/views/pages/miscellaneous/Error.vue'),
     meta: {
       layout: 'full',

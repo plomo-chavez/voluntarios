@@ -7,6 +7,7 @@ import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth
 import routesDefault from './routes/routesDefault'
 import useJwt             from '@/auth/jwt/useJwt'
 import store              from '@/store'
+import administracion from './routes/administracion'
 import dashboard from './routes/dashboard'
 import uiElements from './routes/ui-elements/index'
 import pages from './routes/pages'
@@ -26,6 +27,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: { name: 'home' } },
     ...routesDefault,
+    ...administracion,
     // ...dashboard,
     // ...pages,
     // ...chartsMaps,

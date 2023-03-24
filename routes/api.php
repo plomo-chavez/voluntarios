@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\UserAuthentication;
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Configuracion\UsuariosController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +23,7 @@ Route::post('/auth/details',    [AuthController::class, 'detailsUser']);
 Route::post('/auth/pruebas',    [AuthController::class, 'verificar']);
 Route::post('/auth/verificar',  [AuthController::class, 'verificar']);
 Route::middleware([UserAuthentication::class])->post('/auth/pruebas2',    [AuthController::class, 'verificar']);
+Route::middleware([UserAuthentication::class])->post('/get/usuarios',    [UsuariosController::class, 'getUsuarios']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

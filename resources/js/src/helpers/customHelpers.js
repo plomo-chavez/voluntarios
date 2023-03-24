@@ -17,6 +17,9 @@ export default {
           text    : message,
         },
       })
+    },
+    copyObject (data) {
+        return JSON.parse(JSON.stringify(data))
     }
   }
 }

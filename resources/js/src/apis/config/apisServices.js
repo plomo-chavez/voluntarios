@@ -18,4 +18,7 @@ export default class apisServices {
   login(...args) {
     return this.axiosIns.post(this.apisConfig.loginEndpoint, ...args)
   }
+  getUsuarios(...args) {
+    return this.axiosIns.post(this.apisConfig.getUsuarios, ...args)
+  }
 }

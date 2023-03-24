@@ -37,6 +37,7 @@ import chartsAndMaps    from './charts-and-maps'
 import uiElements       from './ui-elements'
 import formAndTable     from './forms-and-table'
 import itemsDefault     from './itemsDefault'
+import administracion     from './administracion'
 
 // Array of sections
 export default [
@@ -45,5 +46,6 @@ export default [
     // ...uiElements,
     // ...formAndTable,
     // ...itemsDefault,
-    ...itemsDefault
+    ...itemsDefault,
+    ...administracion
 ]
