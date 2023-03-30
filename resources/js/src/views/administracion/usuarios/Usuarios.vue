@@ -1,106 +1,67 @@
 <template>
     <div>
-      <b-form @submit.prevent="submitForm">
-        <b-form-group id="nombreGroup"
-                      label="Nombre"
-                      label-for="nombreInput"
-                      :invalid-feedback="nombreFeedback"
-                      :state="nombreState">
-          <b-form-input id="nombreInput"
-                        v-model="nombre"
-                        :state="nombreState"
-                        required></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="correoGroup"
-                      label="Correo electrónico"
-                      label-for="correoInput"
-                      :invalid-feedback="correoFeedback"
-                      :state="correoState">
-          <b-form-input id="correoInput"
-                        v-model="correo"
-                        type="email"
-                        :state="correoState"
-                        required></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="telefonoGroup"
-                      label="Teléfono"
-                      label-for="telefonoInput"
-                      :invalid-feedback="telefonoFeedback"
-                      :state="telefonoState">
-          <b-form-input id="telefonoInput"
-                        v-model="telefono"
-                        type="tel"
-                        :state="telefonoState"
-                        required></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="switchGroup"
-                      label="Activo"
-                      label-for="switchInput"
-                      :state="switchState">
-          <b-form-checkbox id="switchInput"
-                           v-model="activo"
-                           :state="switchState"></b-form-checkbox>
-        </b-form-group>
-
-        <b-button type="submit"
-                  variant="primary"
-                  :disabled="!formIsValid">Enviar</b-button>
-      </b-form>
+      <b-form-group
+        label="Input Text"
+        label-for="input-text"
+        :state="validateState('input-text')"
+      >
+        <b-form-input
+          id="input-text"
+          v-model="value"
+          :class="{ 'is-invalid': validateState('input-text') === false }"
+        />
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required"
+          vid="input-text"
+          v-model="value"
+        >
+          <div v-if="errors.length" class="invalid-feedback">
+            {{ errors[0] }}
+          </div>
+        </ValidationProvider>
+      </b-form-group>
+      <b-button variant="primary" @click="validateForm">Validate</b-button>
     </div>
   </template>
 
-<script>
-import { BForm, BFormGroup, BFormInput, BFormCheckbox, BButton } from 'bootstrap-vue'
+  <script>
+  import { ValidationProvider } from 'vee-validate';
+  import { extend } from 'vee-validate';
+  import { required } from 'vee-validate/dist/rules';
+  import { BFormGroup, BFormInput, BButton } from 'bootstrap-vue';
 
-export default {
-  components: {
-    BForm,
-    BFormGroup,
-    BFormInput,
-    BFormCheckbox,
-    BButton,
-  },
+  extend('required', required);
+
+  export default {
+    components: {
+      ValidationProvider,
+      BFormGroup,
+      BFormInput,
+      BButton
+    },
     data() {
       return {
-        nombre: '',
-        nombreState: null,
-        nombreFeedback: 'Ingrese su nombre',
-        correo: '',
-        correoState: null,
-        correoFeedback: 'Ingrese un correo electrónico válido',
-        telefono: '',
-        telefonoState: null,
-        telefonoFeedback: 'Ingrese un número de teléfono válido',
-        activo: false,
+        value: '',
+        errors: {}
       }
     },
-    computed: {
-      formIsValid() {
-        return this.nombre && this.correo && this.telefono
-      },
-      switchState() {
-        return this.activo ? 'success' : 'danger'
-      },
-    },
     methods: {
-      submitForm() {
-        if (this.formIsValid) {
-          // envía el formulario
-        } else {
-          if (!this.nombre) {
-            this.nombreState = false
-          }
-          if (!this.correo) {
-            this.correoState = false
-          }
-          if (!this.telefono) {
-            this.telefonoState = false
-          }
-        }
+      validateState(fieldName) {
+        const field = this.$validator && this.$validator.fields.find({ name: fieldName })
+        return field ? field.validateState : null
       },
-    },
+      validateForm() {
+        console.log(this.validator)
+        console.log(this)
+        // this.$validator.validateAll().then((result) => {
+        //   if (result) {
+        //     alert('Form is valid!');
+        //   } else {
+        //     alert('Form is invalid.');
+        //   }
+        // });
+      }
+    }
   }
   </script>
