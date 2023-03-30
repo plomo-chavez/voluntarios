@@ -1,67 +1,105 @@
-<template>
-    <div>
-      <b-form-group
-        label="Input Text"
-        label-for="input-text"
-        :state="validateState('input-text')"
-      >
-        <b-form-input
-          id="input-text"
-          v-model="value"
-          :class="{ 'is-invalid': validateState('input-text') === false }"
-        />
-        <ValidationProvider
-          v-slot="{ errors }"
-          rules="required"
-          vid="input-text"
-          v-model="value"
-        >
-          <div v-if="errors.length" class="invalid-feedback">
-            {{ errors[0] }}
-          </div>
-        </ValidationProvider>
-      </b-form-group>
-      <b-button variant="primary" @click="validateForm">Validate</b-button>
-    </div>
+<<template>
+    <b-card-code title="Simple Form Validation">
+      <validation-observer ref="simpleRules">
+        <b-form>
+          <b-row v-for="(field, index) in formSchema" :key="index">
+            <b-col md="6">
+              <b-form-group>
+                <validation-provider
+                  :name="field.name"
+                  :rules="field.rules"
+                  #default="{ errors }"
+                >
+                  <b-form-input
+                    :type="field.type"
+                    :v-model="formData[field.name]"
+                    :state="errors.length > 0 ? false : null"
+                    :placeholder="field.placeholder"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-col cols="12">
+            <b-button
+              variant="primary"
+              type="submit"
+              @click.prevent="validationForm"
+            >
+              Submit
+            </b-button>
+          </b-col>
+        </b-form>
+      </validation-observer>
+    </b-card-code>
   </template>
-
   <script>
-  import { ValidationProvider } from 'vee-validate';
-  import { extend } from 'vee-validate';
-  import { required } from 'vee-validate/dist/rules';
-  import { BFormGroup, BFormInput, BButton } from 'bootstrap-vue';
-
-  extend('required', required);
+  import BCardCode from '@core/components/b-card-code'
+  import { ValidationProvider, ValidationObserver } from 'vee-validate'
+  import {
+    BFormInput,
+    BFormGroup,
+    BForm,
+    BRow,
+    BCol,
+    BButton,
+    BCardText,
+  } from 'bootstrap-vue'
+  import { required, email } from '@validations'
 
   export default {
     components: {
+      BCardCode,
       ValidationProvider,
-      BFormGroup,
+      ValidationObserver,
+      BCardText,
       BFormInput,
-      BButton
+      BFormGroup,
+      BForm,
+      BRow,
+      BCol,
+      BButton,
     },
     data() {
       return {
-        value: '',
-        errors: {}
+        formSchema: [
+            {
+            name: 'namee',
+            type:'text',
+            label: 'First Name',
+            placeholder: 'First Name',
+            rules: 'required',
+            },
+            {
+                name: 'email',
+            type:'email',
+                label: 'Email',
+                placeholder: 'Email',
+                rules: 'required|email',
+            },
+  {
+    name: 'phone',
+            type:'text',
+    label: 'Teléfono',
+    placeholder: 'Escribe tu número de teléfono',
+    rules: 'required|phone'
+  }
+        ],
+        formData: {
+          name: '',
+        },
       }
     },
     methods: {
-      validateState(fieldName) {
-        const field = this.$validator && this.$validator.fields.find({ name: fieldName })
-        return field ? field.validateState : null
+      validationForm() {
+        this.$refs.simpleRules.validate().then((success) => {
+          if (success) {
+            alert('form submitted!')
+          }
+        })
       },
-      validateForm() {
-        console.log(this.validator)
-        console.log(this)
-        // this.$validator.validateAll().then((result) => {
-        //   if (result) {
-        //     alert('Form is valid!');
-        //   } else {
-        //     alert('Form is invalid.');
-        //   }
-        // });
-      }
-    }
+    },
   }
   </script>
+>
