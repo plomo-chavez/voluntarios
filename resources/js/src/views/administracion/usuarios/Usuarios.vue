@@ -1,6 +1,6 @@
 <template>
         <FormFactory
-            :formSchema="formSchema"
+            :schema="formSchema"
         />
   </template>
   <script>
@@ -13,51 +13,47 @@
       return {
         formSchema: [
             {
-            type: 'text',
-            name: 'name',
-            value: 'nameValue',
-            label: 'Name',
-            placeholder: 'Enter your name',
-            rules: 'required|min:2|max:20',
-            classContainer: 'mb-3',
-            classLabel: 'mb-1',
-            prefixText: '@',
-            suffixText: '.com',
-            prefixIcon: 'UserIcon',
-            suffixIcon: 'MailIcon'
+                type: 'text',
+                name: 'nameValue',
+                value: 'nameValue',
+                label: 'Name',
+                placeholder: 'Enter your name',
+                rules: 'required',
+                prefixText: '@',
+                suffixText: '.com',
+                prefixIcon: 'UserIcon',
+                suffixIcon: 'MailIcon'
             },
             {
-            type: 'password',
-            name: 'password',
-            value: 'passwordValue',
-            label: 'Password',
-            placeholder: 'Enter your password',
-            rules: 'required|min:6|max:12',
-            classContainer: 'mb-3',
-            classLabel: 'mb-1',
-            prefixIcon: 'LockIcon',
-            suffixIcon: 'EyeIcon',
-            disabled: true
+                type: 'password',
+                name: 'password',
+                value: 'passwordValue',
+                label: 'Password',
+                placeholder: 'Enter your password',
+                rules: 'required|min:6|max:12',
+                prefixIcon: 'LockIcon',
+                suffixIcon: 'EyeIcon',
             },
             {
-            type: 'email',
-            name: 'email',
-            value: 'emailValue',
-            label: 'Email',
-            placeholder: 'Enter your email',
-            rules: 'required|email',
-            classContainer: 'mb-3',
-            classLabel: 'mb-1',
-            prefixIcon: 'MailIcon',
-            disabled: false
+                type: 'email',
+                name: 'email',
+                value: 'emailValue',
+                label: 'Email',
+                placeholder: 'Enter your email',
+                rules: 'required|email',
+                prefixIcon: 'MailIcon',
+                disabled: false
+            },
+            {
+                type: 'input-phone',
+                name: 'phone',
+                value: 'phoneValue',
+                label: 'Telefono',
+                placeholder: 'Introduce un telefono celular',
+                rules: 'required',
+                disabled: false
             }
         ],
-        form: {
-            nameValue: '',
-            passwordValue: '',
-            emailValue: ''
-        },
-        formDisabled: false
       }
     },
     methods: {},
