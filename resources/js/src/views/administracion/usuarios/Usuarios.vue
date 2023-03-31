@@ -1,105 +1,66 @@
-<<template>
-    <b-card-code title="Simple Form Validation">
-      <validation-observer ref="simpleRules">
-        <b-form>
-          <b-row v-for="(field, index) in formSchema" :key="index">
-            <b-col md="6">
-              <b-form-group>
-                <validation-provider
-                  :name="field.name"
-                  :rules="field.rules"
-                  #default="{ errors }"
-                >
-                  <b-form-input
-                    :type="field.type"
-                    :v-model="formData[field.name]"
-                    :state="errors.length > 0 ? false : null"
-                    :placeholder="field.placeholder"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-            </b-col>
-          </b-row>
-          <b-col cols="12">
-            <b-button
-              variant="primary"
-              type="submit"
-              @click.prevent="validationForm"
-            >
-              Submit
-            </b-button>
-          </b-col>
-        </b-form>
-      </validation-observer>
-    </b-card-code>
+<template>
+        <FormFactory
+            :formSchema="formSchema"
+        />
   </template>
   <script>
-  import BCardCode from '@core/components/b-card-code'
-  import { ValidationProvider, ValidationObserver } from 'vee-validate'
-  import {
-    BFormInput,
-    BFormGroup,
-    BForm,
-    BRow,
-    BCol,
-    BButton,
-    BCardText,
-  } from 'bootstrap-vue'
-  import { required, email } from '@validations'
-
+  import FormFactory from './FormFactory.vue'
   export default {
     components: {
-      BCardCode,
-      ValidationProvider,
-      ValidationObserver,
-      BCardText,
-      BFormInput,
-      BFormGroup,
-      BForm,
-      BRow,
-      BCol,
-      BButton,
+        FormFactory
     },
     data() {
       return {
         formSchema: [
             {
-            name: 'namee',
-            type:'text',
-            label: 'First Name',
-            placeholder: 'First Name',
-            rules: 'required',
+            type: 'text',
+            name: 'name',
+            value: 'nameValue',
+            label: 'Name',
+            placeholder: 'Enter your name',
+            rules: 'required|min:2|max:20',
+            classContainer: 'mb-3',
+            classLabel: 'mb-1',
+            prefixText: '@',
+            suffixText: '.com',
+            prefixIcon: 'UserIcon',
+            suffixIcon: 'MailIcon'
             },
             {
-                name: 'email',
-            type:'email',
-                label: 'Email',
-                placeholder: 'Email',
-                rules: 'required|email',
+            type: 'password',
+            name: 'password',
+            value: 'passwordValue',
+            label: 'Password',
+            placeholder: 'Enter your password',
+            rules: 'required|min:6|max:12',
+            classContainer: 'mb-3',
+            classLabel: 'mb-1',
+            prefixIcon: 'LockIcon',
+            suffixIcon: 'EyeIcon',
+            disabled: true
             },
-  {
-    name: 'phone',
-            type:'text',
-    label: 'Teléfono',
-    placeholder: 'Escribe tu número de teléfono',
-    rules: 'required|phone'
-  }
+            {
+            type: 'email',
+            name: 'email',
+            value: 'emailValue',
+            label: 'Email',
+            placeholder: 'Enter your email',
+            rules: 'required|email',
+            classContainer: 'mb-3',
+            classLabel: 'mb-1',
+            prefixIcon: 'MailIcon',
+            disabled: false
+            }
         ],
-        formData: {
-          name: '',
+        form: {
+            nameValue: '',
+            passwordValue: '',
+            emailValue: ''
         },
+        formDisabled: false
       }
     },
-    methods: {
-      validationForm() {
-        this.$refs.simpleRules.validate().then((success) => {
-          if (success) {
-            alert('form submitted!')
-          }
-        })
-      },
-    },
+    methods: {},
   }
   </script>
 >

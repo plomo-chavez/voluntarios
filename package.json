@@ -75,7 +75,7 @@
     "vue-good-table": "^2.21.10",
     "vue-i18n": "^8.25.0",
     "vue-perfect-scrollbar": "^0.2.1",
-    "vue-phone-number-input": "^1.1.9",
+    "vue-phone-number-input": "^1.12.13",
     "vue-prism-component": "^1.1.1",
     "vue-quill-editor": "^3.0.6",
     "vue-ripple-directive": "^2.0.1",

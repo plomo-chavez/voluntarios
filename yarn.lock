@@ -10531,7 +10531,7 @@ vue-perfect-scrollbar@^0.2.1:
   resolved "https://registry.yarnpkg.com/vue-perfect-scrollbar/-/vue-perfect-scrollbar-0.2.1.tgz#2fecab975512f7c8c37e1610dee48faf46d649f3"
   integrity sha512-45rOonNrZaKX0mu0N9v422+c3Ngm8iTnVAP0N2iUwPfWZJds4S6eRGdmiNbrVFqmUc8IfRNI0Dpa3Zk8ntjaZQ==
 
-vue-phone-number-input@^1.1.9:
+vue-phone-number-input@^1.12.13:
   version "1.12.13"
   resolved "https://registry.yarnpkg.com/vue-phone-number-input/-/vue-phone-number-input-1.12.13.tgz#47159b919ff0ca478484f7436f665cfdcb8773d9"
   integrity sha512-ZEHNQvLnxnwZOO4bgf6RRPduV91Ph4HrkqS7QeWqiIanGycz0h7yUgMS5z1Qf6gU1l3Whk1EQD+zn+eQcnolyg==
