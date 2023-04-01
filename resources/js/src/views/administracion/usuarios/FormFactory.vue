@@ -2,6 +2,7 @@
     <div>
       <validation-observer ref="simpleRules">
         <b-row>
+            <pre>{{ form }}</pre>
           <b-col
             v-for="(input,indxInput) in schema"
             :key="'input-'+indxInput"
@@ -37,7 +38,7 @@
                       @input="changeData(input.value,$event)"
                       :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
                       :placeholder="(typeof input.placeholder != 'undefined'?input.placeholder:'Introduce un dato valido')"
-                      class="col-12"
+                      class="bg-white col-12"
                     />
                     <b-input-group-append v-if="(typeof input.sufijoIcon != 'undefined')" is-text>
                       <feather-icon :icon="input.sufijoIcon" />
@@ -78,7 +79,7 @@
                       @input="form[input.value] = $event"
                       :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
                       :placeholder="(typeof input.placeholder != 'undefined'?input.placeholder:'Introduce un dato valido')"
-                      class="col-12"
+                      class="bg-white col-12"
                     />
                     <b-input-group-append v-if="(typeof input.sufijoIcon != 'undefined')" is-text>
                       <feather-icon :icon="input.sufijoIcon" />
@@ -119,7 +120,7 @@
                       @input="form[input.value] = $event"
                       :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
                       :placeholder="(typeof input.placeholder != 'undefined'?input.placeholder:'Introduce un dato valido')"
-                      class="col-12"
+                      class="bg-white col-12"
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     />
                     <b-input-group-append v-if="(typeof input.sufijoIcon != 'undefined')" is-text>
@@ -179,7 +180,7 @@
                 :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
               >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
               <!-- input -->
-              <b-input-group class="mb-3">
+              <b-input-group class="mb-3 bg-white ">
                 <b-input-group-prepend>
                   <b-form-datepicker
                   style="z-index: 0;"
@@ -219,7 +220,6 @@
                 :name=" (typeof input.name  != 'undefined'?input.name:'')"
                 :rules="(typeof input.rules != 'undefined'?  input.rules + '' : '' )"
                 >
-                <!-- :rules="(typeof input.rules != 'undefined'?  input.rules + '|min:12' : 'min:10' )" -->
                 <!-- Label -->
               <p
                 :for="input.name"
@@ -232,7 +232,7 @@
                 :name=" input.name"
                 :value="form[input.value]"
                 @input="changeData(input.value,$event)"
-                class="w-100 char-textarea"
+                class="bg-white w-100 char-textarea"
                 :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
                 :placeholder="(typeof input.placeholder != 'undefined'?input.placeholder:'')"
                 :default-country-code="'MX'"
@@ -249,6 +249,117 @@
               <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
               <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
               </validation-provider>
+            </div>
+        <!-- input input-money -->
+            <div v-if="input.type === 'input-money'">
+                <!-- Provider de validación -->
+                <validation-provider
+                    #default="{ errors }"
+                    :name=" (typeof input.name  != 'undefined'?input.name:'')"
+                    :rules="(typeof input.rules != 'undefined'?  input.rules + '' : '' )"
+                >                <!-- Label -->
+                    <p
+                        :for="input.name"
+                        :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                    >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
+                    <!-- input -->
+
+                    <cleave
+                        :id="   input.name"
+                        :ref="  input.name"
+                        :name=" input.name"
+                        :value="form[input.value]"
+                        @input="changeData(input.value,$event)"
+                        class="bg-white w-100 char-textarea form-control"
+                        :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
+                        :placeholder="(typeof input.placeholder != 'undefined'?input.placeholder:'')"
+                        :raw="false"
+                        :options="optionsInputMoney"
+                    />
+                    <!-- Errores de validación -->
+                    <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
+                    <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                </validation-provider>
+            </div>
+        <!-- input input-select -->
+            <div v-if="input.type === 'input-select'">
+                <!-- Provider de validación -->
+                <validation-provider
+                    #default="{ errors }"
+                    :name=" (typeof input.name  != 'undefined'?input.name:'')"
+                    :rules="(typeof input.rules != 'undefined'?  input.rules + '' : '' )"
+                >
+                    <!-- :rules="(typeof input.rules != 'undefined'?  input.rules + '|min:12' : 'min:10' )" -->
+                    <!-- Label -->
+                    <p
+                        :for="input.name"
+                        :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                    >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
+                    <!-- input -->
+
+                    <b-form-group>
+                        <v-select
+                            :id="   input.name"
+                            :ref="  input.name"
+                            :name=" input.name"
+                            :value="form[input.value]"
+                            @input="changeData(input.value,$event)"
+                            class="bg-white w-100 char-textarea"
+                            :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
+                            :placeholder="(typeof input.placeholder != 'undefined'?input.placeholder:'')"
+                            :options="input.catalogo"
+                        >
+                            <span slot="no-options">No hay opciones.</span>
+                        </v-select>
+
+                    </b-form-group>
+                    <!-- Errores de validación -->
+                    <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
+                    <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                </validation-provider>
+            </div>
+        <!-- input input-switch -->
+            <div v-if="input.type === 'input-switch'">
+                <!-- Provider de validación -->
+                <validation-provider
+                    #default="{ errors }"
+                    :name=" (typeof input.name  != 'undefined'?input.name:'')"
+                    :rules="(typeof input.rules != 'undefined'?  input.rules + '' : '' )"
+                >
+                    <!-- :rules="(typeof input.rules != 'undefined'?  input.rules + '|min:12' : 'min:10' )" -->
+                    <!-- Label -->
+                    <p
+                        :for="input.name"
+                        :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                    >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
+                    <!-- input -->
+                    <div>
+                        <b-form-group label="Stacked (vertical) switch style checkboxes">
+                            <b-form-checkbox-group
+                                :id="   input.name"
+                                :ref="  input.name"
+                                :name=" input.name"
+                                :size="typeof input.size == 'undefined' ? 'sm' : input.size"
+                                :value="form[input.value]"
+                                @input="{
+                                    console.log($event)
+                                    changeData(input.value,$event)
+                                }"
+                                :options="input.catalogo"
+                                >
+                                <template #default="{ option, checked }">
+                                    <div>
+                                    <!-- <b-form-checkbox :value="option.value" :checked="checked"></b-form-checkbox> -->
+                                    <span>{{ option. }}</span>
+                                    </div>
+                                </template>
+                        </b-form-checkbox-group>
+                        </b-form-group>
+                    </div>
+                    <!-- Errores de validación -->
+                    <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
+                    <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                </validation-provider>
             </div>
           </b-col>
         </b-row>
@@ -295,7 +406,9 @@
       BInputGroup,
       BInputGroupPrepend,
       BInputGroupAppend,
+      BFormCheckboxGroup
     } from 'bootstrap-vue'
+    import vSelect from 'vue-select'
     import {
       ValidationProvider,
       ValidationObserver,
@@ -312,8 +425,9 @@
     import es from "vee-validate/dist/locale/es.json";
     import VuePhoneNumberInput from 'vue-phone-number-input';
     import 'vue-phone-number-input/dist/vue-phone-number-input.css';
-
     import Cleave from 'vue-cleave-component'
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import 'cleave.js/dist/addons/cleave-phone.us'
   // eslint-disable-next-line import/no-extraneous-dependencies
   // import 'cleave.js/dist/addons/cleave-phone.us'
   // import 'cleave.js/dist/addons/cleave-phone.us'
@@ -325,11 +439,13 @@
     },
     components: {
       VuePhoneNumberInput,
+      BFormCheckboxGroup,
       BRow,
       Cleave,
       flatPickr,
       BFormTextarea,
       BCol,
+      vSelect,
       BFormDatepicker,
       BFormGroup,
       BFormInput,
@@ -343,14 +459,19 @@
       ValidationObserver,
     },
     data() {
-      return {
-        errorsPersonalizados : {},
-        form : {},
-        openModal:false,
-        password,
-        required,
-        formDisabled : false,
-      }
+        return {
+            errorsPersonalizados : {},
+            form : {},
+            openModal:false,
+            password,
+            required,
+            formDisabled : false,
+            optionsInputMoney : {
+                numeral: true,
+                prefix: '$ ',
+                numeralThousandsGroupStyle: 'thousand',
+            },
+        }
     },
     props: {
       schema: {
@@ -414,7 +535,11 @@
       inicializar(){
         let tmp = {};
         this.schema.forEach(item => {
-          let valor = this.data == null ? null : ( this.data.hasOwnProperty(item.value) ? item.value : null )
+            if(item.type == 'input-switch'){
+                let valor = this.data == null ? [] : ( this.data.hasOwnProperty(item.value) ? item.value : [] )
+            }else{
+                let valor = this.data == null ? null : ( this.data.hasOwnProperty(item.value) ? item.value : null )
+            }
           tmp[item.value] = valor;
         })
         console.log('tmp', tmp)
