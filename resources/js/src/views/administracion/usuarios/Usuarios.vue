@@ -1,6 +1,7 @@
 <template>
         <FormFactory
             :schema="formSchema"
+            @formExport="formOkay"
         />
   </template>
   <script>
@@ -12,101 +13,98 @@
     data() {
       return {
         formSchema: [
-            // {
-            //     type: 'text',
-            //     name: 'nameValue',
-            //     value: 'nameValue',
-            //     label: 'Name',
-            //     placeholder: 'Enter your name',
-            //     rules: 'required',
-            //     prefixText: '@',
-            //     suffixText: '.com',
-            //     prefixIcon: 'UserIcon',
-            //     suffixIcon: 'MailIcon'
-            // },
-            // {
-            //     type: 'password',
-            //     name: 'password',
-            //     value: 'passwordValue',
-            //     label: 'Password',
-            //     placeholder: 'Enter your password',
-            //     rules: 'required|min:6|max:12',
-            //     prefixIcon: 'LockIcon',
-            //     suffixIcon: 'EyeIcon',
-            // },
-            // {
-            //     type: 'email',
-            //     name: 'email',
-            //     value: 'emailValue',
-            //     label: 'Email',
-            //     placeholder: 'Enter your email',
-            //     rules: 'required|email',
-            //     prefixIcon: 'MailIcon',
-            //     disabled: false
-            // },
-            // {
-            //     type: 'input-phone',
-            //     name: 'phone',
-            //     value: 'phoneValue',
-            //     label: 'Telefono',
-            //     placeholder: 'Introduce un telefono celular',
-            //     rules: 'required',
-            //     disabled: false
-            // },
-            // {
-            //     type: 'input-select',
-            //     name: 'select',
-            //     value: 'selectValue',
-            //     label: 'Telefono',
-            //     placeholder: 'Introduce un telefono celular',
-            //     rules: 'required',
-            //     catalogo: [
-            //         {
-            //             label : 'Opción 1',
-            //             value : 'opt1',
-            //         },
-            //         {
-            //             label : 'Opción 2',
-            //             value : 'opt2',
-            //         },
-            //         {
-            //             label : 'Opción 3',
-            //             value : 'opt3',
-            //         },
-            //     ],
-            //     disabled: false
-            // },
-            // {
-            //     type: 'input-money',
-            //     name: 'money',
-            //     value: 'moneyValue',
-            //     label: 'Telefono',
-            //     placeholder: 'Introduce un telefono celular',
-            //     rules: 'required',
-            //     catalogo: [],
-            //     disabled: false
-            // },
+            {
+                type        : 'input-select',
+                name        : 'persona',
+                value       : 'persona',
+                label       : 'Persona',
+                catalogo    : [],
+            },
+            {
+                type        : 'input-select',
+                name        : 'tipo de usuario',
+                value       : 'tipoUsuario',
+                label       : 'Tipo de usuario',
+                // rules       : 'required',
+                catalogo    : [],
+            },
+            {
+                type        : 'text',
+                name        : 'usuario',
+                value       : 'usuario',
+                label       : 'Usuario',
+                placeholder : 'Introduce un usuario',
+                rules       : 'required',
+                prefixIcon  : 'UserIcon',
+            },
+            {
+                type        : 'password',
+                name        : 'contraseña',
+                value       : 'contraseña',
+                label       : 'Contraseña',
+                placeholder : 'Introduce una contraseña',
+                rules       : 'required',
+                // rules       : 'required|min:6|max:12',
+                prefixIcon  : 'LockIcon',
+            },
+            {
+                type        : 'email',
+                name        : 'correo',
+                value       : 'correo',
+                prefixIcon  : 'MailIcon',
+                rules       : 'required|email',
+                label       : 'Correo electronico',
+                placeholder : 'Introduce un correo electronico',
+            },
+            {
+                type        : 'input-phone',
+                name        : 'telefono',
+                value       : 'telefono',
+                label       : 'Telefono',
+                rules       : 'required',
+                placeholder: 'Introduce un telefono celular',
+            },
             {
                 type        : 'input-switch',
-                name        : 'switch',
-                value       : 'switchValue',
-                label       : 'Switch',
-                placeholder : 'Introduce un telefono celular',
+                name        : 'accesoMovil',
+                value       : 'accesoMovil',
+                label       : 'Acceso a la plataforma movil',
                 rules       : 'required',
-                size        : 'lg',
-                disabled    : false,
-                vertical    : true,
-                catalogo: [
-                    { text: 'Red', value: 'red' },
-                    { text: 'Green', value: 'green' },
-                    { text: 'Yellow (disabled)', value: 'yellow', disabled: true },
-                    { text: 'Blue', value: 'blue' },
-                ],
-            }
+                labels      : {
+                                'on' : "Si",
+                                'off': "No"
+                            },
+            },
+            {
+                type        : 'input-switch',
+                name        : 'accesoWeb',
+                value       : 'accesoWeb',
+                label       : 'Acceso a la plataforma web',
+                rules       : 'required',
+                labels      : {
+                                'on' : "Si",
+                                'off': "No"
+                            },
+            },
+            {
+                type        : 'input-switch',
+                name        : 'bloqueado',
+                value       : 'bloqueado',
+                label       : '¿Esta bloqueado?',
+                rules       : 'required',
+                labels      : {
+                                'on' : "Si",
+                                'off': "No"
+                            },
+            },
         ],
       }
     },
-    methods: {},
+    methods: {
+        formOkay (form) {
+            console.log('form: ',form)
+        }
+    },
   }
   </script>
 >
