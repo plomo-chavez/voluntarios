@@ -1,5 +1,7 @@
 <template>
         <FormFactory
+            class="col-10 mx-auto"
+            withCard
             :schema="formSchema"
             @formExport="formOkay"
         />
@@ -14,6 +16,7 @@
       return {
         formSchema: [
             {
+                classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'input-select',
                 name        : 'persona',
                 value       : 'persona',
@@ -21,6 +24,7 @@
                 catalogo    : [],
             },
             {
+                classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'input-select',
                 name        : 'tipo de usuario',
                 value       : 'tipoUsuario',
@@ -29,6 +33,7 @@
                 catalogo    : [],
             },
             {
+                classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'text',
                 name        : 'usuario',
                 value       : 'usuario',
@@ -38,6 +43,7 @@
                 prefixIcon  : 'UserIcon',
             },
             {
+                classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'password',
                 name        : 'contraseña',
                 value       : 'contraseña',
@@ -48,6 +54,7 @@
                 prefixIcon  : 'LockIcon',
             },
             {
+                classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'email',
                 name        : 'correo',
                 value       : 'correo',
@@ -57,6 +64,7 @@
                 placeholder : 'Introduce un correo electronico',
             },
             {
+                classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'input-phone',
                 name        : 'telefono',
                 value       : 'telefono',
@@ -65,6 +73,7 @@
                 placeholder: 'Introduce un telefono celular',
             },
             {
+                classContainer:' col-lg-4 col-md-4 col-sm-12 col-12',
                 type        : 'input-switch',
                 name        : 'accesoMovil',
                 value       : 'accesoMovil',
@@ -76,6 +85,7 @@
                             },
             },
             {
+                classContainer:' col-lg-4 col-md-4 col-sm-12 col-12',
                 type        : 'input-switch',
                 name        : 'accesoWeb',
                 value       : 'accesoWeb',
@@ -87,6 +97,7 @@
                             },
             },
             {
+                classContainer:' col-lg-4 col-md-4 col-sm-12 col-12',
                 type        : 'input-switch',
                 name        : 'bloqueado',
                 value       : 'bloqueado',
@@ -107,4 +118,3 @@
     },
   }
   </script>
->
