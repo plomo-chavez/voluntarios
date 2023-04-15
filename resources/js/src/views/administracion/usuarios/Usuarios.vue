@@ -7,7 +7,8 @@
         />
   </template>
   <script>
-  import FormFactory from './FormFactory.vue'
+  import FormFactory from '@currentComponents/FormFactory.vue'
+
   export default {
     components: {
         FormFactory
@@ -20,8 +21,7 @@
                 type        : 'input-select',
                 name        : 'persona',
                 value       : 'persona',
-                label       : 'Persona',
-                catalogo    : [],
+                label       : 'Persona'
             },
             {
                 classContainer:'col-lg-4 col-md-6 col-12',
@@ -29,8 +29,8 @@
                 name        : 'tipo de usuario',
                 value       : 'tipoUsuario',
                 label       : 'Tipo de usuario',
-                // rules       : 'required',
-                catalogo    : [],
+                rules       : 'required',
+                catalogo    : 'tiposUsuario',
             },
             {
                 classContainer:'col-lg-4 col-md-6 col-12',

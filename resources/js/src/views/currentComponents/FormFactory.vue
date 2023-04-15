@@ -288,38 +288,15 @@
                       </div>
                   <!-- input input-select -->
                       <div v-if="input.type === 'input-select'">
-                          <!-- Provider de validación -->
-                          <validation-provider
-                              #default="{ errors }"
-                              :name=" (typeof input.name  != 'undefined'?input.name:'')"
-                              :rules="(typeof input.rules != 'undefined'?  input.rules + '' : '' )"
-                          >
-                              <!-- Label -->
-                              <p
-                                  :for="input.name"
-                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
-                              >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
-                              <!-- input -->
-
-                              <b-form-group>
-                                  <v-select
-                                      :id="   input.name"
-                                      :ref="  input.name"
-                                      :name=" input.name"
-                                      :value="form[input.value]"
-                                      @input="changeData(input.value,$event)"
-                                      class="bg-white w-100 p-0 m-0"
-                                      :disabled=" formDisabled?true:(typeof input.disabled != 'undefined'?input.disabled:false)"
-                                      :placeholder="(typeof input.placeholder != 'undefined' ? input.placeholder : 'Selecciona un opción' )"
-                                      :options="input.catalogo"
-                                  >
-                                      <span slot="no-options">No hay opciones.</span>
-                                  </v-select>
-
-                              </b-form-group>
-                              <!-- Errores de validación -->
-                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
-                          </validation-provider>
+                        <customSelect
+                            :id="   input.name"
+                            :ref="  input.name"
+                            :name=" input.name"
+                            :input="input"
+                            :formDisabled="formDisabled"
+                            @changeData="changeValueSelect"
+                            :formValue="form[input.value]"
+                        />
                       </div>
                   <!-- input input-checkbox -->
                       <div v-if="input.type === 'input-checkbox'">
@@ -448,12 +425,9 @@
     import VuePhoneNumberInput from 'vue-phone-number-input';
     import 'vue-phone-number-input/dist/vue-phone-number-input.css';
     import Cleave from 'vue-cleave-component'
-    // eslint-disable-next-line import/no-extraneous-dependencies
     import 'cleave.js/dist/addons/cleave-phone.us'
-  // eslint-disable-next-line import/no-extraneous-dependencies
-  // import 'cleave.js/dist/addons/cleave-phone.us'
-  // import 'cleave.js/dist/addons/cleave-phone.us'
     import apis from '@/apis/useApis'
+    import customSelect from '@currentComponents/customSelect.vue'
 
   export default {
     directives: {
@@ -483,6 +457,7 @@
         BCardTitle,
         BCardSubTitle,
         BCardBody,
+        customSelect,
     },
     data() {
         return {
@@ -548,6 +523,9 @@
         this.inicializar();
     },
     methods: {
+        changeValueSelect(data){
+            this.changeData(data.field,data.value)
+        },
         getLabelSwitch(valor,labels){
             let texto = 'Faltan los labels'
             if (typeof labels == 'object') {

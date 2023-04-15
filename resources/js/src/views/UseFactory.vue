@@ -1,18 +1,18 @@
 <template>
 <div>
-  <FactoryForm 
+  <FactoryForm
     :schema="schema"
     :btnCancelar="false"
     disabledForm
     @formExport="formExport"
     @cancelar="cancelar"
   />
-</div>  
+</div>
 </template>
 
 <script>
 import customHelpers  from '@helpers/customHelpers'
-import FactoryForm from './currentComponents/FactoryForm.vue'
+import FactoryForm from './currentComponents/FormFactory.vue'
 
 export default {
   components: {

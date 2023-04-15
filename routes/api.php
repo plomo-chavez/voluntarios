@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\UserAuthentication;
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\Configuracion\UsuariosController;
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::post('/auth/verificar',  [AuthController::class, 'verificar']);
 Route::middleware([UserAuthentication::class])->post('/auth/pruebas2',    [AuthController::class, 'verificar']);
 Route::middleware([UserAuthentication::class])->post('/get/usuarios',    [UsuariosController::class, 'getUsuarios']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);
+Route::post('/catalogo/tiposUsuarios',   [CatalogosController::class, 'getTiposUsuarios']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
