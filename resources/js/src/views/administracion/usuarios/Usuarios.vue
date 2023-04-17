@@ -1,20 +1,38 @@
 <template>
-        <FormFactory
-            class="col-10 mx-auto"
-            withCard
-            :schema="formSchema"
-            @formExport="formOkay"
-        />
+    <div>
+        <div>
+            <!-- <pre>{{ data[0].tipo_usuario }}</pre> -->
+            <VistaUno
+                :data="data"
+                :columnas="columnas"
+                @mdoEditar="editar"
+            />
+        </div>
+        <div v-if="showForm">
+            <FormFactory
+                class="col-10 mx-auto"
+                withCard
+                :schema="formSchema"
+                @formExport="formOkay"
+            />
+        </div>
+    </div>
   </template>
   <script>
-  import FormFactory from '@currentComponents/FormFactory.vue'
+    import FormFactory from '@currentComponents/FormFactory.vue'
+    import VistaUno from '@currentComponents/VistaUno.vue'
+    import peticiones from '@/apis/usePeticiones'
+    import customHelpers  from '@helpers/customHelpers'
 
   export default {
     components: {
-        FormFactory
+        FormFactory,
+        VistaUno
     },
     data() {
       return {
+        showForm : false,
+        data:[],
         formSchema: [
             {
                 classContainer:'col-lg-4 col-md-6 col-12',
@@ -109,12 +127,92 @@
                             },
             },
         ],
+        columnas : [
+            {
+                type    : 'text',
+                key     : 'usuario',
+                label   : 'Usuario',
+                sortable: true
+            },
+            {
+                key     : 'tipo_usuario.nombre',
+                label   : 'Tipo de usuario',
+                sortable: true
+            },
+            {
+                type    : 'text',
+                key     : 'email',
+                label   : 'Correo',
+                sortable: true
+            },
+            {
+                type    : 'text',
+                key     : 'telefono',
+                label   : 'Telefono',
+                sortable: true
+            },
+            {
+                type    : 'text',
+                key     : 'persona',
+                label   : 'Persona',
+                sortable: true
+            },
+            {
+                type    : 'switch',
+                key     : 'accesoMovil',
+                label   : 'Acceso movil',
+                sortable: true
+            },
+            {
+                type    : 'switch',
+                key     : 'accesoWeb',
+                label   : 'Acceso Web',
+                sortable: true
+            },
+            {
+                type    : 'text',
+                key     : 'estatus',
+                label   : 'Estatus',
+                sortable: true
+            },
+            {
+                type    : 'text',
+                type    : 'switch',
+                key     : 'bloqueado',
+                label   : 'Bloqueado',
+                sortable: true
+            },
+            {
+                type    : 'switch',
+                key     : 'validado',
+                label   : 'Validado',
+                sortable: true
+            },
+        ]
       }
     },
+    mixins : [customHelpers],
+    beforeMount() {
+        this.inicializar()
+    },
     methods: {
+        inicializar(){
+            peticiones
+                .usuarios({})
+                .then(response => {
+                    this.data = response.data.data
+                    console.log(this.data)
+                })
+                .catch(error   => { console.log(error); })
+        },
         formOkay (form) {
             console.log('form: ',form)
-        }
+        },
+        editar (data) {
+            let tmp = this.copyObject(data)
+
+            console.log('Editar -> ',data)
+        },
     },
   }
   </script>

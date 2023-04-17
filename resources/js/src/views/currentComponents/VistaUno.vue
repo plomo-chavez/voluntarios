@@ -65,13 +65,23 @@
       @filtered="onFiltered"
     >
     <template v-for="(field, index, item) in fields" v-slot:[`cell(${field.key})`]="data">
-      <div v-if="field.type === 'switch'">
-        <feather-icon v-if="data.item[field.key]"  size="21" icon="CheckIcon" class="ml-5 text-success" />
-        <feather-icon v-if="!data.item[field.key]" size="21" icon="SlashIcon" class="ml-5 text-danger" />
-      </div>
-      <div v-else>
+        <div v-if="field.type === 'switch'">
+            <feather-icon v-if="data.item[field.key]"  size="21" icon="CheckIcon" class="ml-5 text-success" />
+            <feather-icon v-if="!data.item[field.key]" size="21" icon="SlashIcon" class="ml-5 text-danger" />
+        </div>
+        <div v-else-if="field.type === 'index'">
+        #
+        </div>
+        <div v-else-if="field.type === 'actions'" class="d-flex flex-wrap">
+            <div style="padding-left: 5px;" v-if="(typeof config.cellActions.btnEditar   == 'undefined' ? true : config.cellActions.btnEditar )"  @click=" emitirInfo('mdoEditar', data.item)"><feather-icon size="21" icon="EditIcon" /></div>
+            <div style="padding-left: 5px;" v-if="(typeof config.cellActions.btnEliminar == 'undefined' ? true : config.cellActions.btnEliminar )"><feather-icon size="21" icon="Trash2Icon" /></div>
+        </div>
+        <div v-else-if="field.type === 'text'" class="d-flex flex-wrap">
+            <p>{{data.item[field.key]}}</p>
+        </div>
+        <!-- <div v-else>
         <p>{{data.item[field.key]}}</p>
-      </div>
+        </div> -->
     </template>
     </b-table>
 
@@ -184,7 +194,20 @@ export default {
     // Set the initial number of items
     this.totalRows = this.data.length
     let tmp = this.copyObject(this.columnas)
-    tmp.unshift({key: 'index', label: 'Index',})
+    if (typeof this.config.cellActions == 'undefined' ? true : this.config.cellActions) {
+        tmp.unshift({
+            key     : 'index',
+            type    : 'index',
+            label   : 'Index',
+        })
+    }
+    if (typeof this.config.index == 'undefined' ? true : this.config.index) {
+        tmp.unshift({
+            key     : 'actions',
+            type    : 'actions',
+            label   : 'Acciones',
+        })
+    }
     this.fields =  this.copyObject(tmp)
   },
   props: {
@@ -201,17 +224,28 @@ export default {
       default : 'Titulo por defecto',
     },
     config: {
-      type: Object,
-      default : {
-        buscador : true,
-        btnNuevo : true,
-        btnFiltrar : true,
-        btnOtros : null,
-      },
+        type: Object,
+        default: function() {
+        // Retorna el valor predeterminado del prop como un nuevo objeto
+        return {
+            showCellActions: true,
+            cellActions: {
+            btnEditar: true,
+            btnEliminar: true,
+            },
+            index: true,
+            buscador: true,
+            btnNuevo: true,
+            btnFiltrar: true,
+            btnOtros: null,
+        };
+        }
     }
-
   },
   methods: {
+    emitirInfo(metodo,info){
+        this.$emit(metodo,info)
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length

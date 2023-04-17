@@ -25,6 +25,7 @@ Route::post('/auth/pruebas',    [AuthController::class, 'verificar']);
 Route::post('/auth/verificar',  [AuthController::class, 'verificar']);
 Route::middleware([UserAuthentication::class])->post('/auth/pruebas2',    [AuthController::class, 'verificar']);
 Route::middleware([UserAuthentication::class])->post('/get/usuarios',    [UsuariosController::class, 'getUsuarios']);
+Route::middleware([UserAuthentication::class])->post('/usuarios/listar',    [UsuariosController::class, 'listarUsuarios']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);
 Route::post('/catalogo/tiposUsuarios',   [CatalogosController::class, 'getTiposUsuarios']);
 

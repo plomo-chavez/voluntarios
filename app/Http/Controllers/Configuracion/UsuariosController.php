@@ -22,4 +22,17 @@ class UsuariosController extends Controller
         $response['message']      =  'User Logged In Successfully';
         return response()->json($response, 200);
     }
+    public function listarUsuarios(Request $request){
+        $response = BaseController::response();
+        $payload = $request->all();
+        // var_dump($payload);
+        // $users = User::where('age', '>', 18)
+        //      ->orderBy('name', 'asc')
+        //      ->get();
+        $users = User::with('tipoUsuario')->get();
+        $response['result']    = true;
+        $response['data']      = $users;
+        $response['message']      =  'User Logged In Successfully';
+        return response()->json($response, 200);
+    }
 }

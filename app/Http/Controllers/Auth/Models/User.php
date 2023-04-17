@@ -39,6 +39,17 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
+    public function tipoUsuario() {
+        return $this->hasOne(TipoUsuario::class,'id','tipoUsuario_id');
+        // return $this->hasOne('App\Http\Controllers\Auth\Models\TipoUsuario', 'id', 'file_id');
+        // return $this->belongsTo(TipoUsuario::class,'id','tipoUsuario_id');
+
+    }
+    public function getTipoUsuarioAttribute()
+    {
+        return optional($this->tipo_usuario)['nombre'] ?? '';
+    }
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
