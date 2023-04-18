@@ -559,13 +559,13 @@
             this.schema.forEach(item => {
                 let valor = null
                 if(item.type == 'input-checkbox'){
-                    valor = this.data == null ? [] : ( this.data.hasOwnProperty(item.value) ? item.value : [] )
+                    valor = this.data == null ? [] : ( this.data.hasOwnProperty(item.value) ? this.data[item.value] : [] )
                 }else if(item.type == 'input-switch'){
-                    valor = this.data == null ? false : ( this.data.hasOwnProperty(item.value) ? item.value : false )
+                    valor = this.data == null ? false : ( this.data.hasOwnProperty(item.value) ? this.data[item.value] : false )
                 }else if(item.type == 'input-money'){
-                    valor = this.data == null ? 0 : ( this.data.hasOwnProperty(item.value) ? item.value : 0 )
+                    valor = this.data == null ? 0 : ( this.data.hasOwnProperty(item.value) ? this.data[item.value] : 0 )
                 }else{
-                    valor = this.data == null ? null : ( this.data.hasOwnProperty(item.value) ? item.value : null )
+                    valor = this.data == null ? null : ( this.data.hasOwnProperty(item.value) ? this.data[item.value] : null )
                 }
             tmp[item.value] = valor;
             })

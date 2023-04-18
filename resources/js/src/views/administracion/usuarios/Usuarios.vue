@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div v-if="!showForm">
             <!-- <pre>{{ data[0].tipo_usuario }}</pre> -->
             <VistaUno
                 :data="data"
@@ -12,8 +12,10 @@
             <FormFactory
                 class="col-10 mx-auto"
                 withCard
+                :data = 'activeRow'
                 :schema="formSchema"
                 @formExport="formOkay"
+                @cancelar="resetForm"
             />
         </div>
     </div>
@@ -31,6 +33,7 @@
     },
     data() {
       return {
+        activeRow : null,
         showForm : false,
         data:[],
         formSchema: [
@@ -75,7 +78,7 @@
                 classContainer:'col-lg-4 col-md-6 col-12',
                 type        : 'email',
                 name        : 'correo',
-                value       : 'correo',
+                value       : 'email',
                 prefixIcon  : 'MailIcon',
                 rules       : 'required|email',
                 label       : 'Correo electronico',
@@ -210,9 +213,20 @@
         },
         editar (data) {
             let tmp = this.copyObject(data)
-
-            console.log('Editar -> ',data)
+            if(typeof tmp.tipo_usuario != 'undefined') {
+                tmp.tipoUsuario = {value : tmp.tipoUsuario_id, label : tmp.tipo_usuario.nombre}
+            }
+            tmp.accesoMovil = typeof tmp.accesoMovil  == 'number' ? (tmp.accesoMovil ? true:false) : false
+            tmp.accesoWeb = typeof tmp.accesoWeb  == 'number' ? (tmp.accesoWeb ? true:false) : false
+            tmp.bloqueado = typeof tmp.bloqueado  == 'number' ? (tmp.bloqueado ? true:false) : false
+            console.log('Editar -> ',tmp)
+            this.activeRow = this.copyObject(tmp)
+            this.showForm = true;
         },
+        resetForm(){
+            this.showForm = false
+            this.activeRow = null
+        }
     },
   }
   </script>
