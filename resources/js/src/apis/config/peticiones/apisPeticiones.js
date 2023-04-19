@@ -9,7 +9,10 @@ export default class apiPeticiones {
     this.axiosIns = axiosIns
     this.apisConfig = { ...this.apisConfig, ...jwtOverrideConfig }
   }
-  usuarios(...args) {
+  getUsuarios(...args) {
     return this.axiosIns.post(this.apisConfig.apiUsuarios, ...args)
+  }
+  adminUsuarios(...args) {
+    return this.axiosIns.post(this.apisConfig.apiAdminUsuarios, ...args)
   }
 }

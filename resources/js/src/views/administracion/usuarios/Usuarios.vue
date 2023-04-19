@@ -13,8 +13,8 @@
                 class="col-10 mx-auto"
                 withCard
                 :data = 'activeRow'
-                :schema="formSchema"
-                @formExport="formOkay"
+                :schema="schemaMain"
+                @formExport="save"
                 @cancelar="resetForm"
             />
         </div>
@@ -33,7 +33,9 @@
     },
     data() {
       return {
+        accion: 1,
         activeRow : null,
+        schemaMain : null,
         showForm : false,
         data:[],
         formSchema: [
@@ -201,7 +203,7 @@
     methods: {
         inicializar(){
             peticiones
-                .usuarios({})
+                .getUsuarios({})
                 .then(response => {
                     this.data = response.data.data
                     console.log(this.data)
@@ -212,6 +214,7 @@
             console.log('form: ',form)
         },
         editar (data) {
+            this.accion = 2;
             let tmp = this.copyObject(data)
             if(typeof tmp.tipo_usuario != 'undefined') {
                 tmp.tipoUsuario = {value : tmp.tipoUsuario_id, label : tmp.tipo_usuario.nombre}
@@ -221,11 +224,36 @@
             tmp.bloqueado = typeof tmp.bloqueado  == 'number' ? (tmp.bloqueado ? true:false) : false
             console.log('Editar -> ',tmp)
             this.activeRow = this.copyObject(tmp)
+            let tmpSchema = this.copyObject(this.formSchema)
+            tmpSchema.splice(3,1)
+            this.schemaMain = tmpSchema
             this.showForm = true;
         },
         resetForm(){
+            this.accion = 1;
             this.showForm = false
             this.activeRow = null
+        },
+        save(data){
+            let payload = this.copyObject(data);
+            if (this.accion == 2) {
+                payload.id = this.activeRow.id
+            }
+            payload.accion = this.accion
+            peticiones
+                .adminUsuarios({
+                    'payload' : payload,
+                })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error   => { console.log(error); })
+        },
+        nuevo(){
+            this.accion = 1;
+            this.activeRow = null
+            this.schemaMain = this.copyObject(this.formSchema)
+            setTimeout(() => { this.showForm = true;}, 10)
         }
     },
   }

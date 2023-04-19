@@ -35,4 +35,8 @@ class UsuariosController extends Controller
         $response['message']      =  'User Logged In Successfully';
         return response()->json($response, 200);
     }
+        public function administrarUsuarios(Request $request){
+            $payload = $request->all();
+            return BaseController::administrar($payload['payload'], new User());
+        }
 }
