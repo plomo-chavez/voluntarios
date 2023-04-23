@@ -19,34 +19,27 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'poersona_id',
+        'tipoUsuario_id',
+        'usuario',
         'email',
-        'password',
+        'avatar_id',
+        'telefono',
+        'intentos',
+        'accesoMovil',
+        'accesoWeb',
+        'activo',
+        'estatus',
+        'bloqueado',
+        'validado',
+        'token',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     public function tipoUsuario() {
         return $this->hasOne(TipoUsuario::class,'id','tipoUsuario_id');
-        // return $this->hasOne('App\Http\Controllers\Auth\Models\TipoUsuario', 'id', 'file_id');
-        // return $this->belongsTo(TipoUsuario::class,'id','tipoUsuario_id');
-
     }
-    public function getTipoUsuarioAttribute()
-    {
+
+    public function getTipoUsuarioAttribute(){
         return optional($this->tipo_usuario)['nombre'] ?? '';
     }
 

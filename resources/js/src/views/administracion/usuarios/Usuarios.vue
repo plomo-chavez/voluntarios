@@ -6,6 +6,9 @@
                 :data="data"
                 :columnas="columnas"
                 @mdoEditar="editar"
+                @mdoEliminar="onEliminar"
+                @mtdNuevo="nuevoRegistro"
+                @mtdFiltrar="reload"
             />
         </div>
         <div v-if="showForm">
@@ -202,16 +205,49 @@
     },
     methods: {
         inicializar(){
+            this.schemaMain = this.copyObject(this.formSchema)
+            this.reload()
+        },
+        reload () {
             peticiones
                 .getUsuarios({})
                 .then(response => {
                     this.data = response.data.data
-                    console.log(this.data)
                 })
                 .catch(error   => { console.log(error); })
         },
-        formOkay (form) {
-            console.log('form: ',form)
+        resetForm(){
+            this.accion = 1;
+            this.showForm = false
+            this.activeRow = null
+            this.reload();
+        },
+        save(data){
+            let payload = this.copyObject(data);
+            if (this.accion == 2) {
+                payload.id = this.activeRow.id
+            }
+            payload.accion = this.accion
+           this.peticionAdministrar(payload)
+        },
+        peticionAdministrar(payload){
+            peticiones
+                .adminUsuarios({
+                    'payload' : payload,
+                })
+                .then(response => {
+                    this.messageSweet({
+                        message: response.data.message,
+                        icon: response.data.result ? 'success' : 'error',
+                    });
+                    this.resetForm();
+                })
+                .catch(error   => { console.log(error); })
+        },
+        nuevoRegistro () {
+            this.schemaMain = this.copyObject(this.formSchema)
+            this.activeRow = {};
+            setTimeout(() => { this.showForm = true; }, 10);
         },
         editar (data) {
             this.accion = 2;
@@ -222,39 +258,18 @@
             tmp.accesoMovil = typeof tmp.accesoMovil  == 'number' ? (tmp.accesoMovil ? true:false) : false
             tmp.accesoWeb = typeof tmp.accesoWeb  == 'number' ? (tmp.accesoWeb ? true:false) : false
             tmp.bloqueado = typeof tmp.bloqueado  == 'number' ? (tmp.bloqueado ? true:false) : false
-            console.log('Editar -> ',tmp)
             this.activeRow = this.copyObject(tmp)
             let tmpSchema = this.copyObject(this.formSchema)
             tmpSchema.splice(3,1)
             this.schemaMain = tmpSchema
             this.showForm = true;
         },
-        resetForm(){
-            this.accion = 1;
-            this.showForm = false
-            this.activeRow = null
-        },
-        save(data){
-            let payload = this.copyObject(data);
-            if (this.accion == 2) {
-                payload.id = this.activeRow.id
-            }
-            payload.accion = this.accion
-            peticiones
-                .adminUsuarios({
-                    'payload' : payload,
-                })
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(error   => { console.log(error); })
-        },
-        nuevo(){
-            this.accion = 1;
-            this.activeRow = null
-            this.schemaMain = this.copyObject(this.formSchema)
-            setTimeout(() => { this.showForm = true;}, 10)
+        onEliminar(data){
+            this.messageConfirm({
+                confirmFunction: () => { this.peticionAdministrar({...data,accion : 3}) }
+            })
         }
     },
   }
   </script>
+

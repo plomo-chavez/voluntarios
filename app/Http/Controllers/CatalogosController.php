@@ -8,8 +8,8 @@ class CatalogosController extends Controller
 {
     public function getTiposUsuarios(Request $request){
         $data = [
-            [ 'name' => 'Administrador',],
-            [ 'name' => 'Recepcionista',],
+            [ 'nombre' => 'Administrador','id' => 1],
+            [ 'nombre' => 'Recepcionista','id' => 2],
         ];
         $response = [
             'status' => false,

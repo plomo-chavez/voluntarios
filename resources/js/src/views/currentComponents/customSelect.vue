@@ -81,7 +81,8 @@ export default {
     formatoToCatalogo(data){
         let tmp = []
         data.map((item, index) => {
-            tmp.push({ 'label': item?.name ?? '','value': item?.name ?? '',})
+            console.log(item)
+            tmp.push({ 'label': item?.nombre ?? '','value': item?.id ?? '',})
         })
         return tmp
     },

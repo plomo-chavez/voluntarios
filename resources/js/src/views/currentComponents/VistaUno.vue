@@ -4,7 +4,7 @@
     :title="title"
     no-body
   >
-    <b-card-body>
+    <b-card-body class="p-1 pb-0">
       <div class="d-flex justify-content-between  flex-wrap">
         <div>
             <b-button
@@ -73,8 +73,8 @@
         #
         </div>
         <div v-else-if="field.type === 'actions'" class="d-flex flex-wrap">
-            <div style="padding-left: 5px;" v-if="(typeof config.cellActions.btnEditar   == 'undefined' ? true : config.cellActions.btnEditar )"  @click=" emitirInfo('mdoEditar', data.item)"><feather-icon size="21" icon="EditIcon" /></div>
-            <div style="padding-left: 5px;" v-if="(typeof config.cellActions.btnEliminar == 'undefined' ? true : config.cellActions.btnEliminar )"><feather-icon size="21" icon="Trash2Icon" /></div>
+            <div style="padding-left: 5px;" class="text-warning fw-bolder" v-if="(typeof config.cellActions.btnEditar   == 'undefined' ? true : config.cellActions.btnEditar )"   @click=" emitirInfo('mdoEditar', data.item)"><feather-icon size="16" icon="EditIcon" /></div>
+            <div style="padding-left: 5px;" class="text-danger fw-bolder" v-if="(typeof config.cellActions.btnEliminar == 'undefined' ? true : config.cellActions.btnEliminar )" @click=" emitirInfo('mdoEliminar', data.item)"><feather-icon size="16" icon="Trash2Icon" /></div>
         </div>
         <div v-else-if="field.type === 'text'" class="d-flex flex-wrap">
             <p>{{data.item[field.key]}}</p>
@@ -227,18 +227,18 @@ export default {
         type: Object,
         default: function() {
         // Retorna el valor predeterminado del prop como un nuevo objeto
-        return {
-            showCellActions: true,
-            cellActions: {
-            btnEditar: true,
-            btnEliminar: true,
-            },
-            index: true,
-            buscador: true,
-            btnNuevo: true,
-            btnFiltrar: true,
-            btnOtros: null,
-        };
+            return {
+                showCellActions: true,
+                cellActions: {
+                btnEditar: true,
+                btnEliminar: true,
+                },
+                index: true,
+                buscador: true,
+                btnNuevo: true,
+                btnFiltrar: true,
+                btnOtros: null,
+            };
         }
     }
   },
@@ -247,7 +247,6 @@ export default {
         this.$emit(metodo,info)
     },
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },

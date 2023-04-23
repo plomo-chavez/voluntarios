@@ -27,11 +27,30 @@ class BaseController extends Controller
         ), 200);
     }
 
-    function insertar($payload, $modelo) {
-        return $modelo::create($payload);
+     public function insertar($payload, $modelo) {
+        $modelo::create($payload);
+        return self::responsee('Registro guardado corrrectamente.');
     }
 
-    public static function administrar(array $payload = [], Model $modelo = null) {
+    public function actualizar($payload, $modelo) {
+       if($payload['id']){
+           $modelo::updateOrCreate(['id' => $payload['id']],$payload);
+           return self::responsee('Registro actualizado corrrectamente.');
+       } else {
+           return self::responsee('Actualizar no tiene id.', false);
+       }
+   }
+
+    public function eliminar($payload, $modelo) {
+        if($payload['id']){
+            $modelo::whereIn('id', [$payload['id']])->delete();
+            return self::responsee('Registro eliminado corrrectamente.');
+        } else {
+            return self::responsee('Para poder eliminar se requiere el id.', false);
+        }
+    }
+
+    public function administrar(array $payload = [], Model $modelo = null) {
         if (isset($payload['accion'])) {
             switch($payload['accion']){
                 case 1:

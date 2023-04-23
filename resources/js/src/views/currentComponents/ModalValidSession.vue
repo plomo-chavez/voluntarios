@@ -2,7 +2,7 @@
     <b-modal
       ref="my-modal"
       hide-footer
-      
+
       ok-only
       no-close-on-backdrop
       title="Using Component Methods"
@@ -30,12 +30,12 @@
       </b-row>
     </div>
     <b-row align-h="between">
-      <b-button 
-        v-ripple.400="'rgba(186, 191, 199, 0.15)'" 
+      <b-button
+        v-ripple.400="'rgba(186, 191, 199, 0.15)'"
         variant="outline-secondary"
         @click="goToLogout"
       > Cerrar sesión</b-button>
-      <b-button 
+      <b-button
         @click="goToRefreshSession"
         variant="relief-primary"
       > Refrescar sesión</b-button>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { 
+import {
   BButton,
   BModal,
   BCardText,
@@ -97,7 +97,7 @@ export default {
       }
     },
   },
-  
+
   beforeMount(){
     this.user = store.state.app.userData.name;
   },
@@ -107,7 +107,7 @@ export default {
     },
     async goToRefreshSession(){
       if(this.password == null){
-        this.message({message :'Introduce la contraseña para continuar.',color:"danger"});
+        this.messageToast({message :'Introduce la contraseña para continuar.',color:"danger"});
       }else{
           // useJwt
           //   .login({
@@ -122,10 +122,10 @@ export default {
           //     //   localStorage.setItem('userData', JSON.stringify(userData))
           //     //   localStorage.setItem('tk', data.data.user.token)
           //     //   this.$ability.update(userData.ability)
-          //     //   this.message({message :`Bienvenido ${userData.name } !`,color:"success"});
+          //     //   this.messageToast({message :`Bienvenido ${userData.name } !`,color:"success"});
           //     //   setTimeout(() => { goToLogout(); }, 500);
           //     // }else{
-          //     //   this.message({message :'Ocurrio un problema, intenta de nuevo', color:"danger"});
+          //     //   this.messageToast({message :'Ocurrio un problema, intenta de nuevo', color:"danger"});
           //     //   setTimeout(() => { goToLogout(); }, 500);
           //     // }
           //   })
@@ -134,7 +134,7 @@ export default {
           //     this.$refs.loginForm.setErrors(error.response.data.error)
           //   })
 
-            
+
           useJwt
             .login({
               email   : store.state.app.userData.email,
@@ -151,7 +151,7 @@ export default {
                 store.commit('app/UPDATE_USERDATA', userData)
                 localStorage.setItem('tk', data.data.user.token)
                 this.$ability.update(userData.ability)
-                this.message({message:'Sesión refrescada con exito.'});
+                this.messageToast({message:'Sesión refrescada con exito.'});
                 setTimeout(() => {
                   window.location.reload();
                 }, );
