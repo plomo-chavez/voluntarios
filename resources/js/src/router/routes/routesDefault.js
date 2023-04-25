@@ -29,6 +29,14 @@ export default [
     },
   },
   {
+    path: '/calendar',
+    name: 'calendario',
+    component: () => import('@/views/apps/calendar/Calendar.vue'),
+    meta: {
+      pageTitle: 'Calendario',
+    },
+  },
+  {
     path: '/trabajadores',
     name: 'trabajadores',
     component: () => import('@/views/Home.vue'),
